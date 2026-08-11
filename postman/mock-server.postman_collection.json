@@ -1,531 +1,527 @@
 {
-	"info": {
-		"_postman_id": "e5070f91-2a44-48f7-a330-3116b1d1e373",
-		"name": "Cardnet Mock Server APIs",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "40861791"
-	},
-	"item": [
-		{
-			"name": "Tokenization",
-			"item": [
-				{
-					"name": "Direct Tokenization",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"Email\": \"email@domain.com\",\n    \"Pan\": \"4111111111111111\",\n    \"CVV\": \"123\",\n    \"Expiration\": \"11/35\",\n    \"Titular\": \"Cardholder Name\",\n    \"CustomerId\": {{CustomerId}}\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/Secure/api/Token?commerceKey={{privateKey}}",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"Secure",
-								"api",
-								"Token"
-							],
-							"query": [
-								{
-									"key": "commerceKey",
-									"value": "{{privateKey}}"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Customer",
-			"item": [
-				{
-					"name": "Create Customer",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const response = pm.response.json();\r",
-									"pm.collectionVariables.set(\"CustomerId\", response.CustomerId);"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{privateKey}}",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"CommerceCustomerId\": \"CUST_001\",\n    \"FirstName\": \"Pavan\",\n    \"LastName\": \"Pawar\",\n    \"Email\": \"Pavan.pawar@example.com\",\n    \"PhoneNumber\": \"1234567880\",\n    \"Enabled\": true\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/v1/api/Customer",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"v1",
-								"api",
-								"Customer"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Customer",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const response = pm.response.json();\r",
-									"pm.collectionVariables.set(\"CustomerId\", response.CustomerId);"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{privateKey}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/v1/api/Customer/{{CustomerId}}",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"v1",
-								"api",
-								"Customer",
-								"{{CustomerId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Customer",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{privateKey}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"CommerceCustomerId\": \"CUST_001\",\n    \"FirstName\": \"Prathmesh Updated\",\n    \"LastName\": \"Doe\",\n    \"Email\": \"john.doe@example.com\",\n    \"PhoneNumber\": \"1234567890\",\n    \"Enabled\": true\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/v1/api/Customer/{{CustomerId}}/update",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"v1",
-								"api",
-								"Customer",
-								"{{CustomerId}}",
-								"update"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Purchase",
-			"item": [
-				{
-					"name": "Create Purchase",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{privateKey}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"TrxToken\": \"CT__V6K78VC7YbHdUdroBiDsNX6dSoXaPhRv4jiYpVJ8SzQ_\",\n    \"Order\": \"ORD_12345\",\n    \"Capture\": true,\n    \"Amount\": 10000,\n    \"Currency\": \"DOP\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/v1/api/purchase",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"v1",
-								"api",
-								"purchase"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "CommitPurchase",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{privateKey}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"purchaseId\": \"100001\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/v1/api/purchase/100001/commit",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"v1",
-								"api",
-								"purchase",
-								"100001",
-								"commit"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetPurchase",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{privateKey}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/servicios/tokens/v1/api/purchase/100001",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"servicios",
-								"tokens",
-								"v1",
-								"api",
-								"purchase",
-								"100001"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "RefundPurchase",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{privateKey}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/servicios/tokens/v1/api/purchase/100001/refund",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"servicios",
-								"tokens",
-								"v1",
-								"api",
-								"purchase",
-								"100001",
-								"refund"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "ListPurchases",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "{{privateKey}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/servicios/tokens/v1/api/purchase?customerId={{CustomerId}}&from=20260801&to=20260811&authorized=true&orderNumber=ORD_12345",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"servicios",
-								"tokens",
-								"v1",
-								"api",
-								"purchase"
-							],
-							"query": [
-								{
-									"key": "customerId",
-									"value": "{{CustomerId}}"
-								},
-								{
-									"key": "from",
-									"value": "20260801"
-								},
-								{
-									"key": "to",
-									"value": "20260811"
-								},
-								{
-									"key": "authorized",
-									"value": "true"
-								},
-								{
-									"key": "orderNumber",
-									"value": "ORD_12345"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"packages": {},
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"packages": {},
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "baseUrl",
-			"value": "http://localhost:8080/servicios/tokens",
-			"type": "string"
-		},
-		{
-			"key": "privateKey",
-			"value": "9kYH2uY5zoTD-WBMEoc0KNRQYrC7crPRJ7zPegg3suXguw_8L-rZDQ__",
-			"type": "string"
-		},
-		{
-			"key": "customerId",
-			"value": "1001",
-			"type": "string"
-		},
-		{
-			"key": "purchaseId",
-			"value": "100001",
-			"type": "string"
-		},
-		{
-			"key": "CustomerId",
-			"value": ""
-		}
-	]
+  "info": {
+    "_postman_id": "973041b3-15b8-4140-a0e9-8fab475f92d9",
+    "name": "Cardnet Mock Server APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37510923"
+  },
+  "item": [
+    {
+      "name": "Tokenization",
+      "item": [
+        {
+          "name": "Direct Tokenization",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"Email\": \"email@domain.com\",\n    \"Pan\": \"4111111111111111\",\n    \"CVV\": \"123\",\n    \"Expiration\": \"11/35\",\n    \"Titular\": \"Cardholder Name\",\n    \"CustomerId\": {{CustomerId}}\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/Secure/api/Token?commerceKey={{privateKey}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "Secure",
+                "api",
+                "Token"
+              ],
+              "query": [
+                {
+                  "key": "commerceKey",
+                  "value": "{{privateKey}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Customer",
+      "item": [
+        {
+          "name": "Create Customer",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"CustomerId\", response.CustomerId);"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{privateKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"CommerceCustomerId\": \"CUST_001\",\n    \"FirstName\": \"Pavan\",\n    \"LastName\": \"Pawar\",\n    \"Email\": \"Pavan.pawar@example.com\",\n    \"PhoneNumber\": \"1234567880\",\n    \"Enabled\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/api/Customer",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "api",
+                "Customer"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Customer",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"CustomerId\", response.CustomerId);"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{privateKey}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/api/Customer/{{CustomerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "api",
+                "Customer",
+                "{{CustomerId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Customer",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{privateKey}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"CommerceCustomerId\": \"CUST_001\",\n    \"FirstName\": \"Prathmesh Updated\",\n    \"LastName\": \"Doe\",\n    \"Email\": \"john.doe@example.com\",\n    \"PhoneNumber\": \"1234567890\",\n    \"Enabled\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/api/Customer/{{CustomerId}}/update",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "api",
+                "Customer",
+                "{{CustomerId}}",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Purchase",
+      "item": [
+        {
+          "name": "Create Purchase",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{privateKey}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"TrxToken\": \"CT__V6K78VC7YbHdUdroBiDsNX6dSoXaPhRv4jiYpVJ8SzQ_\",\n    \"Order\": \"ORD_12345\",\n    \"Capture\": true,\n    \"Amount\": 10000,\n    \"Currency\": \"DOP\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/api/purchase",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "api",
+                "purchase"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CommitPurchase",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{privateKey}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"purchaseId\": \"100001\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/api/purchase/100001/commit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "api",
+                "purchase",
+                "100001",
+                "commit"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetPurchase",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{privateKey}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/servicios/tokens/v1/api/purchase/100001",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "servicios",
+                "tokens",
+                "v1",
+                "api",
+                "purchase",
+                "100001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "RefundPurchase",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{privateKey}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/servicios/tokens/v1/api/purchase/100001/refund",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "servicios",
+                "tokens",
+                "v1",
+                "api",
+                "purchase",
+                "100001",
+                "refund"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ListPurchases",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{privateKey}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/servicios/tokens/v1/api/purchase?customerId={{CustomerId}}&from=20260801&to=20260811&authorized=true&orderNumber=ORD_12345",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "servicios",
+                "tokens",
+                "v1",
+                "api",
+                "purchase"
+              ],
+              "query": [
+                {
+                  "key": "customerId",
+                  "value": "{{CustomerId}}"
+                },
+                {
+                  "key": "from",
+                  "value": "20260801"
+                },
+                {
+                  "key": "to",
+                  "value": "20260811"
+                },
+                {
+                  "key": "authorized",
+                  "value": "true"
+                },
+                {
+                  "key": "orderNumber",
+                  "value": "ORD_12345"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/servicios/tokens"
+    },
+    {
+      "key": "privateKey",
+      "value": "9kYH2uY5zoTD-WBMEoc0KNRQYrC7crPRJ7zPegg3suXguw_8L-rZDQ__"
+    },
+    {
+      "key": "customerId",
+      "value": "1001"
+    },
+    {
+      "key": "purchaseId",
+      "value": "100001"
+    },
+    {
+      "key": "CustomerId",
+      "value": ""
+    }
+  ]
 }
