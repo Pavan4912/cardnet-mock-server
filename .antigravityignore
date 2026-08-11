@@ -1,0 +1,49 @@
+# Git
+.git/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Maven build output
+target/
+
+# Quarkus generated/build artifacts
+.quarkus/
+
+# Java compiled files
+*.class
+
+# Logs
+*.log
+
+# OS / IDE noise
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Test / coverage output
+coverage/
+jacoco/
+*.exec
+
+# Generated reports
+surefire-reports/
+failsafe-reports/
+
+# Maven wrapper internals / unnecessary generated files
+.mvn/timing.properties
+
+# Large archives / binaries
+*.zip
+*.tar
+*.tar.gz
+*.jar

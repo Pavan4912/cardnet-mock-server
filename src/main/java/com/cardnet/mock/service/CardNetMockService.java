@@ -1,8 +1,10 @@
 package com.cardnet.mock.service;
 
-import com.cardnet.mock.dto.TokenizeRequest;
-import com.cardnet.mock.dto.TokenizeResponse;
+import com.cardnet.mock.dto.Request.TokenizeRequest;
+import com.cardnet.mock.dto.Response.TokenizeResponse;
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -10,10 +12,18 @@ import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.YearMonth;
 import java.util.Base64;
-import java.util.UUID;
 
 @ApplicationScoped
 public class CardNetMockService {
+
+    @Inject
+    CustomerMockService customerMockService;
+
+    @PostConstruct
+    void init() {
+        System.out.println("Injected CustomerMockService = " + System.identityHashCode(customerMockService));
+    }
+
     public TokenizeResponse tokenize(TokenizeRequest request) {
 
         String[] expiry = request.Expiration().split("/");
@@ -27,17 +37,30 @@ public class CardNetMockService {
                 year,
                 request.CVV());
 
-        return new TokenizeResponse(
+        String PanLastFour = request.Pan().substring(request.Pan().length() - 4);
+        TokenizeResponse response = new TokenizeResponse(
                 generateToken(request),
                 Instant.now().toString(),
                 "Commerce",
                 detectScheme(request.Pan()),
+                null,
                 request.Titular(),
-                request.Pan().substring(request.Pan().length()-4),
+                PanLastFour,
                 Integer.parseInt(month),
                 Integer.parseInt(expiry[1]),
+                null,
                 null
         );
+
+        customerMockService.addPaymentProfile(
+                request.CustomerId(),
+                response.TokenId(),
+                request.Expiration(),
+                detectScheme(request.Pan()),
+                Integer.parseInt(PanLastFour)
+        );
+
+        return response;
     }
 
     private void validateCardInput(

@@ -1,8 +1,7 @@
 package com.cardnet.mock.resource;
 
-import com.cardnet.mock.config.CardNetMockConfig;
-import com.cardnet.mock.dto.TokenizeRequest;
-import com.cardnet.mock.dto.TokenizeResponse;
+//import com.cardnet.mock.config.CardNetMockConfig;
+import com.cardnet.mock.dto.Request.TokenizeRequest;
 import com.cardnet.mock.service.CardNetMockService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -18,32 +17,36 @@ public class CardNetMockResource {
     @Inject
     CardNetMockService service;
 
-    @Inject
-    CardNetMockConfig config;
+    @org.eclipse.microprofile.config.inject.ConfigProperty(name = "cardnet.mock.private-account-key")
+    String privateAccountKey;
 
     @POST
     @Path("/Token")
     public Response tokenize(
             @QueryParam("commerceKey") String commerceKey,
             TokenizeRequest request
-    ) throws InterruptedException {
+    ) {
 
-        if (!config.privateAccountKey().equals(commerceKey)) {
-
-            return Response
-                    .status(Response.Status.UNAUTHORIZED)
-                    .entity(Map.of(
-                            "Error",
-                            "Invalid commerce key"
-                    ))
+        if (!privateAccountKey.equals(commerceKey)) {
+            return Response.status(Response.Status.UNAUTHORIZED)
+                    .entity(Map.of("Error", "Invalid commerce key"))
                     .build();
         }
 
-//        Thread.sleep(30000);
+        try {
+            return Response.ok(service.tokenize(request)).build();
 
-        return Response.ok(
-                service.tokenize(request)
-        ).build();
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(Map.of(
+                            "error", ex.getClass().getSimpleName(),
+                            "message", ex.getMessage()
+                    ))
+                    .build();
+        }
     }
 
 }
