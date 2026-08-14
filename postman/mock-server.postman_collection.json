@@ -11,6 +11,20 @@
       "item": [
         {
           "name": "Direct Tokenization",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"TrxToken\", response.TokenId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -242,27 +256,39 @@
       "item": [
         {
           "name": "Create Purchase",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"PurchaseId\", response.PurchaseId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "auth": {
-              "type": "basic",
-              "basic": [
-                {
-                  "key": "username",
-                  "value": "{{privateKey}}",
-                  "type": "string"
-                }
-              ]
+              "type": "noauth"
             },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{privateKey}}",
+                "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"TrxToken\": \"CT__V6K78VC7YbHdUdroBiDsNX6dSoXaPhRv4jiYpVJ8SzQ_\",\n    \"Order\": \"ORD_12345\",\n    \"Capture\": true,\n    \"Amount\": 10000,\n    \"Currency\": \"DOP\"\n}"
+              "raw": "{\n    \"TrxToken\": \"{{TrxToken}}\",\n    \"Order\": \"ORD_12345\",\n    \"Capture\": true,\n    \"Amount\": 10000,\n    \"Currency\": \"DOP\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/servicios/tokens/v1/api/purchase",
@@ -284,28 +310,26 @@
           "name": "CommitPurchase",
           "request": {
             "auth": {
-              "type": "basic",
-              "basic": [
-                {
-                  "key": "username",
-                  "value": "{{privateKey}}",
-                  "type": "string"
-                }
-              ]
+              "type": "noauth"
             },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{privateKey}}",
+                "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"purchaseId\": \"100001\"\n}"
+              "raw": "{\n    \"purchaseId\": \"{{PurchaseId}}\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/servicios/tokens/v1/api/purchase/100001/commit",
+              "raw": "{{baseUrl}}/servicios/tokens/v1/api/purchase/{{PurchaseId}}/commit",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -315,7 +339,7 @@
                 "v1",
                 "api",
                 "purchase",
-                "100001",
+                "{{PurchaseId}}",
                 "commit"
               ]
             }
@@ -324,25 +348,37 @@
         },
         {
           "name": "GetPurchase",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"PurchaseId\", response.PurchaseId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
           "request": {
             "auth": {
-              "type": "basic",
-              "basic": [
-                {
-                  "key": "username",
-                  "value": "{{privateKey}}",
-                  "type": "string"
-                }
-              ]
+              "type": "noauth"
             },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{privateKey}}",
                 "type": "text"
               }
             ],
@@ -356,7 +392,7 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/servicios/tokens/v1/api/purchase/100001",
+              "raw": "{{baseUrl}}/servicios/tokens/v1/api/purchase/{{PurchaseId}}",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -366,7 +402,7 @@
                 "v1",
                 "api",
                 "purchase",
-                "100001"
+                "{{PurchaseId}}"
               ]
             }
           },
@@ -374,22 +410,33 @@
         },
         {
           "name": "RefundPurchase",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "auth": {
-              "type": "basic",
-              "basic": [
-                {
-                  "key": "username",
-                  "value": "{{privateKey}}",
-                  "type": "string"
-                }
-              ]
+              "type": "noauth"
             },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{privateKey}}",
                 "type": "text"
               }
             ],
@@ -403,19 +450,17 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/servicios/tokens/v1/api/purchase/100001/refund",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/servicios/tokens/v1/api/purchase/{{PurchaseId}}/refund",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "8080",
               "path": [
                 "servicios",
                 "tokens",
                 "v1",
                 "api",
                 "purchase",
-                "100001",
+                "{{PurchaseId}}",
                 "refund"
               ]
             }
@@ -429,20 +474,18 @@
           },
           "request": {
             "auth": {
-              "type": "basic",
-              "basic": [
-                {
-                  "key": "username",
-                  "value": "{{privateKey}}",
-                  "type": "string"
-                }
-              ]
+              "type": "noauth"
             },
             "method": "GET",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{privateKey}}",
                 "type": "text"
               }
             ],
@@ -456,12 +499,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/servicios/tokens/v1/api/purchase?customerId={{CustomerId}}&from=20260801&to=20260811&authorized=true&orderNumber=ORD_12345",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/servicios/tokens/v1/api/purchase?customerId={{CustomerId}}&from=20260801&to=20260811&authorized=true&orderNumber=ORD_12345",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "8080",
               "path": [
                 "servicios",
                 "tokens",
@@ -532,11 +573,15 @@
       "value": "9kYH2uY5zoTD-WBMEoc0KNRQYrC7crPRJ7zPegg3suXguw_8L-rZDQ__"
     },
     {
-      "key": "purchaseId",
-      "value": "100001"
+      "key": "CustomerId",
+      "value": ""
     },
     {
-      "key": "CustomerId",
+      "key": "TrxToken",
+      "value": ""
+    },
+    {
+      "key": "PurchaseId",
       "value": ""
     }
   ]
