@@ -1,4 +1,5 @@
 package com.cardnet.mock.dto.Response;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 public class PaymentProfile {
     @JsonProperty("PaymentProfileId") public Long PaymentProfileId;
@@ -12,6 +13,7 @@ public class PaymentProfile {
     @JsonProperty("Enabled") public Boolean Enabled;
     
     // backwards compatibility for the mock service
+    @JsonIgnore
     public Long getPaymentProfileId() { return PaymentProfileId; }
     public void setPaymentProfileId(Long id) { this.PaymentProfileId = id; }
     public void setToken(String t) { this.Token = t; }

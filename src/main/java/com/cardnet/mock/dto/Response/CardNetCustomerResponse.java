@@ -1,4 +1,5 @@
 package com.cardnet.mock.dto.Response;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 public class CardNetCustomerResponse {
@@ -25,6 +26,7 @@ public class CardNetCustomerResponse {
     
     // For service backwards compatibility
     public void setCustomerId(Long id) { this.CustomerId = id; }
+    @JsonIgnore
     public Long getCustomerId() { return CustomerId; }
     public void setFirstName(String f) { this.FirstName = f; }
     public void setLastName(String l) { this.LastName = l; }
@@ -32,6 +34,7 @@ public class CardNetCustomerResponse {
     public void setPhone(String p) { this.PhoneNumber = p; }
     public void setCardNetCustomerId(Long c) {}
     public void setPaymentProfiles(List<PaymentProfile> p) { this.PaymentProfiles = p; }
+    @JsonIgnore
     public List<PaymentProfile> getPaymentProfiles() { return PaymentProfiles; }
     public void setCommerceCustomerId(String c) { this.CommerceCustomerId = c; }
     public void setEnabled(Boolean e) { this.Enabled = e; }
