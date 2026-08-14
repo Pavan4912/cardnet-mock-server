@@ -24,11 +24,13 @@
               "raw": "{\n    \"Email\": \"email@domain.com\",\n    \"Pan\": \"4111111111111111\",\n    \"CVV\": \"123\",\n    \"Expiration\": \"11/35\",\n    \"Titular\": \"Cardholder Name\",\n    \"CustomerId\": {{CustomerId}}\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/Secure/api/Token?commerceKey={{privateKey}}",
+              "raw": "{{baseUrl}}/servicios/tokens/Secure/api/Token?commerceKey={{privateKey}}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
+                "servicios",
+                "tokens",
                 "Secure",
                 "api",
                 "Token"
@@ -96,11 +98,13 @@
               "raw": "{\n    // \"CommerceCustomerId\": \"CUST_001\",\n    \"FirstName\": \"Pavan\",\n    \"LastName\": \"Pawar\",\n    \"Email\": \"Pavan.pawar@example.com\",\n    \"PhoneNumber\": \"1234567880\",\n    \"Enabled\": true\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/v1/api/Customer",
+              "raw": "{{baseUrl}}/servicios/tokens/v1/api/Customer",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
+                "servicios",
+                "tokens",
                 "v1",
                 "api",
                 "Customer"
@@ -161,11 +165,13 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/v1/api/Customer/{{CustomerId}}",
+              "raw": "{{baseUrl}}/servicios/tokens/v1/api/Customer/{{CustomerId}}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
+                "servicios",
+                "tokens",
                 "v1",
                 "api",
                 "Customer",
@@ -212,11 +218,13 @@
               "raw": "{\n    \"CommerceCustomerId\": \"CUST_001\",\n    \"FirstName\": \"Pavan\",\n    \"LastName\": \"Ratnadip Pawar\",\n    \"Email\": \"john.doe@example.com\",\n    \"PhoneNumber\": \"1234567890\",\n    \"Enabled\": true\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/v1/api/Customer/{{CustomerId}}/update",
+              "raw": "{{baseUrl}}/servicios/tokens/v1/api/Customer/{{CustomerId}}/update",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
+                "servicios",
+                "tokens",
                 "v1",
                 "api",
                 "Customer",
@@ -257,11 +265,13 @@
               "raw": "{\n    \"TrxToken\": \"CT__V6K78VC7YbHdUdroBiDsNX6dSoXaPhRv4jiYpVJ8SzQ_\",\n    \"Order\": \"ORD_12345\",\n    \"Capture\": true,\n    \"Amount\": 10000,\n    \"Currency\": \"DOP\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/v1/api/purchase",
+              "raw": "{{baseUrl}}/servicios/tokens/v1/api/purchase",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
+                "servicios",
+                "tokens",
                 "v1",
                 "api",
                 "purchase"
@@ -295,11 +305,13 @@
               "raw": "{\n    \"purchaseId\": \"100001\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/v1/api/purchase/100001/commit",
+              "raw": "{{baseUrl}}/servicios/tokens/v1/api/purchase/100001/commit",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
+                "servicios",
+                "tokens",
                 "v1",
                 "api",
                 "purchase",
@@ -344,12 +356,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/servicios/tokens/v1/api/purchase/100001",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/servicios/tokens/v1/api/purchase/100001",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "8080",
               "path": [
                 "servicios",
                 "tokens",
