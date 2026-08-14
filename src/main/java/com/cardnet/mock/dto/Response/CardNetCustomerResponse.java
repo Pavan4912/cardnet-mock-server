@@ -20,6 +20,8 @@ public class CardNetCustomerResponse {
     @JsonProperty("URL") public String URL;
     @JsonProperty("DocumentTypeId") public Integer DocumentTypeId;
     @JsonProperty("DocNumber") public String DocNumber;
+    @JsonProperty("Plans") public Object Plans;
+    @JsonProperty("Locale") public String Locale;
     
     // For service backwards compatibility
     public void setCustomerId(Long id) { this.CustomerId = id; }

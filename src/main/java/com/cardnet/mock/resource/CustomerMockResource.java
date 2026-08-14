@@ -1,6 +1,7 @@
 package com.cardnet.mock.resource;
 
 import com.cardnet.mock.dto.Request.*;
+import com.cardnet.mock.dto.Response.ApiResponse;
 import com.cardnet.mock.dto.Response.CardNetCustomerResponse;
 import com.cardnet.mock.dto.Response.PaymentProfile;
 import com.cardnet.mock.service.CustomerMockService;
@@ -23,7 +24,7 @@ public class CustomerMockResource {
     @Path("")
     public Response createCustomer(CardNetCustomerRequest request) {
         CardNetCustomerResponse response = customerService.createCustomer(request);
-        return Response.ok(response).build();
+        return Response.ok(new ApiResponse<>(response)).build();
     }
 
     @GET
@@ -35,7 +36,7 @@ public class CustomerMockResource {
                     .entity(Map.of("Code", "TK011", "Message", "Customer not found"))
                     .build();
         }
-        return Response.ok(customer).build();
+        return Response.ok(new ApiResponse<>(customer)).build();
     }
 
     @POST
@@ -52,7 +53,7 @@ public class CustomerMockResource {
                     .build();
         }
 
-        return Response.ok(customer).build();
+        return Response.ok(new ApiResponse<>(customer)).build();
     }
 
 
@@ -71,7 +72,7 @@ public class CustomerMockResource {
                     .build();
         }
 
-        return Response.ok(profile).build();
+        return Response.ok(new ApiResponse<>(profile)).build();
     }
 
     @POST
@@ -88,7 +89,7 @@ public class CustomerMockResource {
                     .build();
         }
 
-        return Response.ok(customer).build();
+        return Response.ok(new ApiResponse<>(customer)).build();
     }
 
     @POST
@@ -105,6 +106,6 @@ public class CustomerMockResource {
                     .build();
         }
 
-        return Response.ok(customer).build();
+        return Response.ok(new ApiResponse<>(customer)).build();
     }
 }
