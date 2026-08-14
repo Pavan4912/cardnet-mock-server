@@ -67,7 +67,7 @@
               "script": {
                 "exec": [
                   "const response = pm.response.json();\r",
-                  "pm.collectionVariables.set(\"CustomerId\", response.Response.customerId);"
+                  "pm.collectionVariables.set(\"CustomerId\", response.Response.CustomerId);"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -128,7 +128,7 @@
               "script": {
                 "exec": [
                   "const response = pm.response.json();\r",
-                  "pm.collectionVariables.set(\"CustomerId\", response.Response.customerId);"
+                  "pm.collectionVariables.set(\"CustomerId\", response.Response.CustomerId);"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -183,7 +183,7 @@
               "script": {
                 "exec": [
                   "const response = pm.response.json();\r",
-                  "pm.collectionVariables.set(\"CustomerId\", response.Response.customerId);"
+                  "pm.collectionVariables.set(\"CustomerId\", response.Response.CustomerId);"
                 ],
                 "type": "text/javascript",
                 "packages": {},
