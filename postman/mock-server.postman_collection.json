@@ -58,7 +58,8 @@
                   ""
                 ],
                 "type": "text/javascript",
-                "packages": {}
+                "packages": {},
+                "requests": {}
               }
             },
             {
@@ -66,39 +67,33 @@
               "script": {
                 "exec": [
                   "const response = pm.response.json();\r",
-                  "pm.collectionVariables.set(\"CustomerId\", response.CustomerId);"
+                  "pm.collectionVariables.set(\"CustomerId\", response.Response.customerId);"
                 ],
                 "type": "text/javascript",
-                "packages": {}
+                "packages": {},
+                "requests": {}
               }
             }
           ],
           "request": {
             "auth": {
-              "type": "basic",
-              "basic": [
-                {
-                  "key": "username",
-                  "value": "{{privateKey}}",
-                  "type": "string"
-                },
-                {
-                  "key": "password",
-                  "value": "",
-                  "type": "string"
-                }
-              ]
+              "type": "noauth"
             },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{privateKey}}",
+                "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"CommerceCustomerId\": \"CUST_001\",\n    \"FirstName\": \"Pavan\",\n    \"LastName\": \"Pawar\",\n    \"Email\": \"Pavan.pawar@example.com\",\n    \"PhoneNumber\": \"1234567880\",\n    \"Enabled\": true\n}"
+              "raw": "{\n    // \"CommerceCustomerId\": \"CUST_001\",\n    \"FirstName\": \"Pavan\",\n    \"LastName\": \"Pawar\",\n    \"Email\": \"Pavan.pawar@example.com\",\n    \"PhoneNumber\": \"1234567880\",\n    \"Enabled\": true\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/v1/api/Customer",
@@ -124,7 +119,8 @@
                   ""
                 ],
                 "type": "text/javascript",
-                "packages": {}
+                "packages": {},
+                "requests": {}
               }
             },
             {
@@ -132,10 +128,11 @@
               "script": {
                 "exec": [
                   "const response = pm.response.json();\r",
-                  "pm.collectionVariables.set(\"CustomerId\", response.CustomerId);"
+                  "pm.collectionVariables.set(\"CustomerId\", response.Response.customerId);"
                 ],
                 "type": "text/javascript",
-                "packages": {}
+                "packages": {},
+                "requests": {}
               }
             }
           ],
@@ -144,17 +141,16 @@
           },
           "request": {
             "auth": {
-              "type": "basic",
-              "basic": [
-                {
-                  "key": "username",
-                  "value": "{{privateKey}}",
-                  "type": "string"
-                }
-              ]
+              "type": "noauth"
             },
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{privateKey}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "",
@@ -181,27 +177,39 @@
         },
         {
           "name": "Update Customer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"CustomerId\", response.Response.customerId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "auth": {
-              "type": "basic",
-              "basic": [
-                {
-                  "key": "username",
-                  "value": "{{privateKey}}",
-                  "type": "string"
-                }
-              ]
+              "type": "noauth"
             },
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Basic {{privateKey}}",
+                "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"CommerceCustomerId\": \"CUST_001\",\n    \"FirstName\": \"Prathmesh Updated\",\n    \"LastName\": \"Doe\",\n    \"Email\": \"john.doe@example.com\",\n    \"PhoneNumber\": \"1234567890\",\n    \"Enabled\": true\n}"
+              "raw": "{\n    \"CommerceCustomerId\": \"CUST_001\",\n    \"FirstName\": \"Pavan\",\n    \"LastName\": \"Ratnadip Pawar\",\n    \"Email\": \"john.doe@example.com\",\n    \"PhoneNumber\": \"1234567890\",\n    \"Enabled\": true\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/v1/api/Customer/{{CustomerId}}/update",
@@ -486,6 +494,7 @@
       "script": {
         "type": "text/javascript",
         "packages": {},
+        "requests": {},
         "exec": [
           ""
         ]
@@ -496,6 +505,7 @@
       "script": {
         "type": "text/javascript",
         "packages": {},
+        "requests": {},
         "exec": [
           ""
         ]
@@ -510,10 +520,6 @@
     {
       "key": "privateKey",
       "value": "9kYH2uY5zoTD-WBMEoc0KNRQYrC7crPRJ7zPegg3suXguw_8L-rZDQ__"
-    },
-    {
-      "key": "customerId",
-      "value": "1001"
     },
     {
       "key": "purchaseId",
