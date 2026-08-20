@@ -49,13 +49,13 @@ public class PurchaseMockService {
 
         if (request.Capture != null && !request.Capture) {
             t.TransactionStatusId = 3;
-            t.Status = "PREAUTHORIZED";
+            t.Status = "Preauthorized";
             t.Description = "Preauthorized";
             t.ApprovalCode = "00";
         } else {
             t.TransactionStatusId = 1;
-            t.Status = "AUTHORIZED";
-            t.Description = "Authorized";
+            t.Status = "Approved";
+            t.Description = "Approved";
             t.ApprovalCode = "00";
         }
 
@@ -100,9 +100,9 @@ public class PurchaseMockService {
     public CardNetPurchaseResponse commitPurchase(String purchaseId) {
         CardNetPurchaseResponse purchase = purchases.get(purchaseId);
         if (purchase != null && purchase.Transaction != null) {
-            if ("PREAUTHORIZED".equals(purchase.Transaction.Status)) {
-                purchase.Transaction.Status = "AUTHORIZED";
-                purchase.Transaction.Description = "Committed";
+            if ("Preauthorized".equals(purchase.Transaction.Status)) {
+                purchase.Transaction.Status = "Approved";
+                purchase.Transaction.Description = "Approved";
                 purchase.Transaction.TransactionStatusId = 1;
 
                 TransactionStep step = new TransactionStep();
@@ -193,7 +193,7 @@ public class PurchaseMockService {
                     // Authorized filter
                     if (authorizedFilter) {
                         if (p.Transaction == null
-                                || !"AUTHORIZED".equals(p.Transaction.Status)) {
+                                || !"Approved".equals(p.Transaction.Status)) {
                             return false;
                         }
                     }
